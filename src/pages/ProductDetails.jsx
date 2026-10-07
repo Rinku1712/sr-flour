@@ -36,9 +36,9 @@ export default function ProductDetails() {
   useTitle(product?.name)
   if (!product) return <NotFound />
   return (
-    <div className="container-page py-10">
+    <div className="container-page scroll-reveal py-10">
       <div className="grid gap-8 md:grid-cols-2">
-        <PackShot product={product} className="aspect-square w-full rounded-[2rem] bg-cream-deep" />
+        <PackShot product={product} className="scroll-reveal-scale product-image aspect-square w-full rounded-[2rem] bg-cream-deep" />
         <div className="space-y-4">
           <h1 className="text-3xl font-bold sm:text-4xl">{product.name}</h1>
           <p className="flex items-center gap-1 text-sm"><Star size={16} className="fill-wheat text-wheat" /> {product.rating} <span className="text-bark">(demo rating)</span></p>
@@ -51,7 +51,7 @@ export default function ProductDetails() {
         <div role="tablist" className="flex gap-2 overflow-x-auto border-b border-forest/10 pb-2">
           {tabs.map((t) => <button key={t} role="tab" aria-selected={t === tab} onClick={() => setTab(t)} className={`shrink-0 rounded-full px-4 py-2 text-sm font-bold ${t === tab ? 'bg-forest text-cream' : 'hover:bg-cream-deep'}`}>{t}</button>)}
         </div>
-        <div role="tabpanel" className="py-6 text-bark"><TabContent tab={tab} product={product} /></div>
+        <div role="tabpanel" className="scroll-reveal py-6 text-bark"><TabContent tab={tab} product={product} /></div>
       </div>
     </div>
   )

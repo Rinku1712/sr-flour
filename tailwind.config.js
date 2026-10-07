@@ -4,10 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream: { DEFAULT: '#FAF6EC', deep: '#F1EAD7' },
-        forest: { DEFAULT: '#1F3D2B', light: '#2F5A40' },
-        wheat: { DEFAULT: '#C9962B', light: '#E8C873' },
-        bark: '#6B4A2F',
+        cream: {
+          DEFAULT: 'rgb(var(--c-cream) / <alpha-value>)',
+          deep: 'rgb(var(--c-cream-deep) / <alpha-value>)',
+        },
+        forest: {
+          DEFAULT: 'rgb(var(--c-forest) / <alpha-value>)',
+          light: 'rgb(var(--c-forest-light) / <alpha-value>)',
+        },
+        wheat: {
+          DEFAULT: 'rgb(var(--c-wheat) / <alpha-value>)',
+          light: 'rgb(var(--c-wheat-light) / <alpha-value>)',
+        },
+        bark: 'rgb(var(--c-bark) / <alpha-value>)',
+        onaccent: 'rgb(var(--c-onaccent) / <alpha-value>)',
       },
       fontFamily: {
         display: ['Fraunces', 'Georgia', 'serif'],

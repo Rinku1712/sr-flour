@@ -1,7 +1,7 @@
 import { useCart } from '../context/CartContext'
 import { formatPrice } from '../utils/format'
 
-const Row = ({ label, value, bold }) => <div className={`flex justify-between ${bold ? 'text-lg font-bold' : ''}`}><span>{label}</span><span>{value}</span></div>
+const Row = ({ label, value, bold }) => <div className={`flex justify-between ${bold ? 'text-lg font-bold' : ''}`}><span>{label}</span><span key={value} className="quantity-value">{value}</span></div>
 
 export default function PriceSummary({ children }) {
   const { subtotal, savings, delivery, total } = useCart()
