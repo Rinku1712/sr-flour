@@ -92,7 +92,7 @@ export default function Home() {
                 viewport={{ once: true, margin: '-80px' }}
                 transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 100, damping: 20, delay: 0.35 }}
                 className="absolute bottom-[9%] left-0 rounded-2xl border border-[#E7E5E0] bg-white px-4 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-forest shadow-md sm:bottom-[13%] sm:left-[2%]"
-                style={{ transform: 'translateZ(54px)' }}
+                style={{ z: 54 }}
               >
                 <motion.span
                   className="block rounded-full bg-protein px-2 py-1 text-center text-black"

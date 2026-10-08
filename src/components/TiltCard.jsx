@@ -30,6 +30,7 @@ export default function TiltCard({ children, className = '' }) {
         onPointerMove={handlePointerMove}
         onPointerLeave={resetTilt}
         whileHover={reduceMotion ? undefined : { scale: 1.015 }}
+        whileTap={reduceMotion ? undefined : { scale: 0.96 }}
         transition={spring}
       >
         <div className="h-full w-full" style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }}>
