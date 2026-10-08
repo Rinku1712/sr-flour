@@ -5,7 +5,15 @@ import { FREE_DELIVERY_ABOVE, DELIVERY_CHARGE } from '../config/config'
 const CartContext = createContext(null)
 const STORAGE_KEY = 'sanjay_cart'
 // Cart stores only { productId, variantId, qty }. Prices are looked up so they never go stale.
-const loadCart = () => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [] } catch { return [] } }
+const loadCart = () => {
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    if (!Array.isArray(stored)) return []
+    return stored.filter((line) => line && typeof line === 'object' && 'productId' in line && 'variantId' in line)
+  } catch {
+    return []
+  }
+}
 const sameLine = (a, b) => a.productId === b.productId && a.variantId === b.variantId
 
 export function CartProvider({ children }) {

@@ -11,8 +11,8 @@ export const navLinks = [
   { to: '/faq', label: 'FAQ' },
   { to: '/contact', label: 'Contact' },
 ]
-const linkCls = ({ isActive }) => `editorial-link font-medium transition hover:text-forest-light ${isActive ? 'text-wheat' : ''}`
-const iconBtn = 'relative rounded-full p-2 hover:bg-cream-deep'
+const linkCls = ({ isActive }) => `editorial-link font-medium text-forest transition hover:text-bark ${isActive ? 'font-bold' : ''}`
+const iconBtn = 'relative rounded-full p-2 text-forest transition-colors hover:bg-cream-deep'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -44,11 +44,11 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`navbar-enter sticky top-0 z-50 border-b border-forest/10 backdrop-blur transition-all duration-300 ${isScrolled ? 'bg-cream/95 shadow-soft' : 'bg-cream/75'}`}>
+      <header className={`navbar-enter sticky top-0 z-50 border-b border-[#E7E5E0] backdrop-blur-xl transition-all duration-300 ${isScrolled ? 'bg-cream/95 shadow-sm' : 'bg-cream/90'}`}>
       <div className={`container-page flex items-center justify-between transition-[height] duration-300 ${isScrolled ? 'h-14' : 'h-16'}`}>
         <button
           type="button"
-          className="rounded-full p-2 md:hidden"
+          className="rounded-full p-2 text-forest transition-colors hover:bg-cream-deep md:hidden"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="mobile-navigation"
@@ -58,7 +58,7 @@ export default function Navbar() {
         </button>
         <Link to="/" aria-label="Sanjay Atta home" className="flex items-center gap-2 font-display text-xl font-bold tracking-wide sm:text-2xl">
           <Wheat aria-hidden="true" className="text-wheat" size={21} strokeWidth={1.6} />
-          <span>SANJAY <span className="text-wheat">ATTA</span></span>
+          <span>SANJAY ATTA</span>
         </Link>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
           {navLinks.map((l) => <NavLink key={l.to} to={l.to} end={l.to === '/'} className={linkCls}>{l.label}</NavLink>)}
@@ -71,14 +71,14 @@ export default function Navbar() {
             aria-haspopup="dialog"
             aria-expanded={searchOpen}
             onClick={() => setSearchOpen(true)}
-            className={`${iconBtn} transition-colors hover:bg-cream-deep`}
+            className={iconBtn}
           >
             <Search size={21} />
           </button>
           <Link to="/account" aria-label="Account" className={`${iconBtn} hidden md:block`}><User size={22} /></Link>
           <Link to="/cart" aria-label={`Cart, ${count} items`} className={iconBtn}>
             <ShoppingBag key={`cart-icon-${count}`} size={22} className={count ? 'cart-icon' : ''} />
-            {count > 0 && <span key={`cart-count-${count}`} className="cart-count absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-wheat px-1 text-xs font-bold">{count}</span>}
+            {count > 0 && <span key={`cart-count-${count}`} className="cart-count absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-protein px-1 text-xs font-bold text-black">{count}</span>}
           </Link>
         </div>
       </div>

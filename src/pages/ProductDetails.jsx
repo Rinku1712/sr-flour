@@ -5,6 +5,7 @@ import useTitle from '../hooks/useTitle'
 import { getProductById } from '../data/products'
 import { faqs } from '../data/content'
 import PackShot from '../components/PackShot'
+import TiltCard from '../components/TiltCard'
 import ProductBuy from '../components/ProductBuy'
 import FAQItem from '../components/FAQItem'
 import NotFound from './NotFound'
@@ -38,7 +39,9 @@ export default function ProductDetails() {
   return (
     <div className="container-page scroll-reveal py-10">
       <div className="grid gap-8 md:grid-cols-2">
-        <PackShot product={product} className="scroll-reveal-scale product-image aspect-square w-full rounded-[2rem] bg-cream-deep" />
+        <TiltCard className="aspect-square w-full rounded-[2rem] bg-cream-deep">
+          <PackShot product={product} className="product-image aspect-square w-full rounded-[2rem] bg-cream-deep" />
+        </TiltCard>
         <div className="space-y-4">
           <h1 className="text-3xl font-bold sm:text-4xl">{product.name}</h1>
           <p className="flex items-center gap-1 text-sm"><Star size={16} className="fill-wheat text-wheat" /> {product.rating} <span className="text-bark">(demo rating)</span></p>

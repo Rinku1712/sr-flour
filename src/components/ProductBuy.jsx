@@ -30,7 +30,7 @@ export default function ProductBuy({ product }) {
         <div className="flex flex-wrap gap-2">
           {product.variants.map((v) => (
             <button key={v.id} type="button" aria-pressed={v.id === variantId} onClick={() => setVariantId(v.id)}
-              className={`min-h-11 rounded-xl border px-5 py-2 text-sm font-bold transition ${v.id === variantId ? 'border-forest bg-forest text-cream' : 'border-forest/20 bg-white hover:border-forest'}`}>
+              className={`min-h-11 rounded-xl border px-5 py-2 text-sm font-bold transition ${v.id === variantId ? 'border-wheat bg-wheat text-forest' : 'border-[#E7E5E0] bg-white text-forest hover:border-wheat'}`}>
               {v.weight}
             </button>
           ))}

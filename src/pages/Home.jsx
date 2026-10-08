@@ -1,68 +1,146 @@
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
 import * as Icons from 'lucide-react'
 import { ArrowDown, ArrowRight, Sparkles, Star } from 'lucide-react'
 import useTitle from '../hooks/useTitle'
 import Button from '../components/Button'
 import PackShot from '../components/PackShot'
+import TiltCard from '../components/TiltCard'
+import AnimatedStat from '../components/AnimatedStat'
 import ProductBuy from '../components/ProductBuy'
 import FAQItem from '../components/FAQItem'
 import { products } from '../data/products'
 import { features, dayPlan, reviews, faqs } from '../data/content'
+import { revealItem, staggerReveal } from '../utils/motionVariants'
 
 const product = products[0]
 
 export default function Home() {
   useTitle('')
+  const heroRef = useRef(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+  const grainDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 115]), { stiffness: 75, damping: 24 })
+  const packDrift = useSpring(useTransform(scrollYProgress, [0, 1], [0, 48]), { stiffness: 70, damping: 22 })
+  const heroVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 20 } },
+  }
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-cream-deep">
-        <div aria-hidden="true" className="pointer-events-none absolute -right-24 top-8 -z-10 h-80 w-80 rounded-full bg-wheat/15 blur-3xl" />
-        <div className="container-page grid items-center gap-8 py-12 sm:py-16 md:grid-cols-2 md:gap-12 md:py-20">
+      <section ref={heroRef} className="relative isolate overflow-hidden bg-cream text-forest">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_75%_44%,rgba(184,134,11,0.10),transparent_44%),linear-gradient(120deg,#FAF8F5_30%,#F2F0EA_100%)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute -left-36 top-16 -z-10 h-96 w-96 rounded-full bg-wheat/10 blur-3xl" />
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+          style={reduceMotion ? undefined : { y: grainDrift }}
+        >
+          {[
+            ['left-[8%] top-[19%]', 9, 0.2],
+            ['left-[47%] top-[12%]', 5, 1.2],
+            ['left-[58%] top-[67%]', 7, 0.8],
+            ['right-[13%] top-[28%]', 10, 1.8],
+            ['right-[7%] bottom-[19%]', 5, 0.5],
+            ['left-[33%] bottom-[16%]', 6, 1.5],
+          ].map(([position, size, delay]) => (
+            <motion.span
+              key={position}
+              className={`hero-grain-particle absolute ${position} rounded-full bg-wheat/75`}
+              style={{ width: size, height: size }}
+              animate={reduceMotion ? undefined : { y: [0, -14, 0], x: [0, 7, 0], opacity: [0.35, 0.8, 0.35] }}
+              transition={{ duration: 5 + Number(delay), delay: Number(delay), repeat: Infinity, ease: 'easeInOut' }}
+            />
+          ))}
+        </motion.div>
+        <motion.div
+          initial={reduceMotion ? false : 'hidden'}
+          animate="visible"
+          variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } } }}
+          className="container-page grid items-center gap-8 py-12 sm:py-16 md:grid-cols-2 md:gap-12 md:py-20"
+        >
           <div>
-            <span className="hero-item hero-item-1 mb-5 inline-flex items-center gap-2 rounded-full border border-forest/10 bg-cream/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-forest">
+            <motion.span variants={heroVariants} className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#E7E5E0] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-forest shadow-sm">
               <Sparkles size={14} className="text-wheat" /> Everyday nutrition <span aria-hidden="true">·</span> Made in India
-            </span>
-            <h1 className="hero-item hero-item-2 max-w-xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-6xl">
-              <span className="block">Better Grains.</span>
-              <span className="mt-1 block font-display font-medium italic text-forest-light">Better Everyday.</span>
-            </h1>
-            <p className="hero-item hero-item-3 mt-4 max-w-md text-lg text-bark">Wholesome multigrain nutrition made for the roti you already love.</p>
-            <div className="hero-item hero-item-4 mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button to="/shop" variant="gold">Shop Now</Button>
+            </motion.span>
+            <motion.h1 variants={heroVariants} className="max-w-2xl text-4xl font-bold leading-[1.02] tracking-[-0.045em] sm:text-6xl lg:text-[4.5rem]">
+              <span className="block">Ultra-natural.</span>
+              <span className="mt-1 block text-protein">High-protein.</span>
+              <span className="mt-1 block font-display font-medium italic text-wheat">Multigrain atta.</span>
+            </motion.h1>
+            <motion.p variants={heroVariants} className="mt-5 max-w-md text-lg leading-8 text-bark">Thoughtfully blended grains for the soft everyday rotis your family already loves.</motion.p>
+            <motion.div variants={heroVariants} className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button to="/shop" variant="primary">Discover Sanjay Atta <ArrowRight size={17} className="button-arrow" /></Button>
               <Button to="/about" variant="outline">Our Story</Button>
-            </div>
-            <p className="hero-item hero-item-4 mt-5 text-sm text-bark">Made for everyday Indian meals</p>
+            </motion.div>
+            <motion.p variants={heroVariants} className="mt-5 text-sm text-bark">Made for everyday Indian meals</motion.p>
           </div>
-          <div className="hero-product relative mx-auto w-full max-w-xl">
-            <div aria-hidden="true" className="absolute inset-[10%] rounded-full bg-wheat/15 blur-2xl" />
-            <div aria-hidden="true" className="absolute inset-[15%] rounded-full border border-wheat/20" />
-            <div aria-hidden="true" className="hero-grain absolute left-[7%] top-[18%] text-wheat/70"><Icons.Wheat size={34} strokeWidth={1.2} /></div>
-            <div aria-hidden="true" className="hero-grain hero-grain-delay absolute bottom-[16%] right-[8%] rotate-45 text-wheat/60"><Icons.Wheat size={28} strokeWidth={1.2} /></div>
-            <div className="hero-float">
-              <PackShot product={product} className="hero-art relative aspect-square w-full drop-shadow-[0_22px_28px_rgba(75,29,36,0.12)]" />
-            </div>
-            <div className="hero-badge absolute bottom-[12%] left-0 rounded-2xl border border-forest/10 bg-cream/95 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-forest shadow-soft sm:bottom-[16%] sm:left-[2%]">
-              <span className="block">High Protein</span>
-              <span className="mt-1 block text-wheat">Multigrain</span>
-            </div>
-          </div>
-        </div>
+          <motion.div
+            className="relative mx-auto w-full max-w-xl"
+            style={reduceMotion ? undefined : { y: packDrift }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.88, rotateY: 10 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ type: 'spring', stiffness: 70, damping: 17, delay: 0.2 }}
+          >
+            <div aria-hidden="true" className="absolute inset-[10%] rounded-full bg-wheat/15 blur-3xl" />
+            <TiltCard className="relative z-10 aspect-square w-full">
+              <PackShot product={product} className="relative aspect-square w-full drop-shadow-[0_36px_46px_rgba(0,0,0,0.32)]" />
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.9, x: -18, y: 12 }}
+                whileInView={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 100, damping: 20, delay: 0.35 }}
+                className="absolute bottom-[9%] left-0 rounded-2xl border border-[#E7E5E0] bg-white px-4 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-forest shadow-md sm:bottom-[13%] sm:left-[2%]"
+                style={{ transform: 'translateZ(54px)' }}
+              >
+                <motion.span
+                  className="block rounded-full bg-protein px-2 py-1 text-center text-black"
+                  animate={reduceMotion ? undefined : { scale: [1, 1.03, 1], filter: ['brightness(1)', 'brightness(1.08)', 'brightness(1)'] }}
+                  transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity }}
+                >
+                  High Protein
+                </motion.span>
+                <span className="mt-1 block rounded-full bg-wheat px-2 py-1 text-center text-forest">Multigrain blend</span>
+              </motion.div>
+            </TiltCard>
+            <motion.div
+              aria-hidden="true"
+              className="absolute right-[8%] top-[13%] -rotate-12 text-wheat/75"
+              style={reduceMotion ? undefined : { y: grainDrift }}
+              animate={reduceMotion ? undefined : { rotate: [0, 8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <Icons.Wheat size={38} strokeWidth={1.1} />
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      <section aria-label="Product highlights" className="border-b border-forest/10 bg-cream">
-        <div className="container-page grid grid-cols-2 gap-4 py-5 sm:grid-cols-4 sm:gap-6 sm:py-6">
+      <section aria-label="Product highlights" className="border-y border-[#E7E5E0] bg-white">
+        <motion.div
+          initial={reduceMotion ? 'visible' : 'hidden'}
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={staggerReveal}
+          className="container-page grid grid-cols-2 gap-4 py-5 sm:grid-cols-4 sm:gap-6 sm:py-6"
+        >
           {[
             [Icons.Wheat, 'Multigrain blend'],
             [Icons.Soup, 'Everyday meals'],
             [Icons.Leaf, 'Ingredient transparency'],
             [Icons.PackageCheck, 'Delivery options at checkout'],
           ].map(([Icon, label]) => (
-            <div key={label} className="flex items-center gap-2 text-xs font-bold text-forest sm:justify-center sm:gap-3 sm:text-sm">
+            <motion.div
+              key={label}
+              variants={revealItem}
+              className="flex items-center gap-2 text-xs font-bold text-forest sm:justify-center sm:gap-3 sm:text-sm"
+            >
               <Icon size={19} className="shrink-0 text-wheat" strokeWidth={1.7} />
               <span>{label}</span>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       <section className="section container-page scroll-reveal">
@@ -71,21 +149,32 @@ export default function Home() {
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-bark">Thoughtfully made for everyday</p>
             <h2 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl">Simple food.<br /><span className="font-display font-medium italic text-forest-light">Thoughtfully made.</span></h2>
           </div>
-          <div className="divide-y divide-forest/10 scroll-reveal-stagger">
-          {features.map((f) => {
+          <motion.div
+            className="divide-y divide-forest/10"
+            initial={reduceMotion ? 'visible' : 'hidden'}
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={staggerReveal}
+          >
+          {features.map((f, index) => {
             const Icon = Icons[f.icon]
             return (
-              <article key={f.title} className="group grid grid-cols-[3rem_1fr_auto] items-center gap-3 py-5 transition-colors hover:bg-cream-deep/60 sm:grid-cols-[4rem_1fr_auto] sm:px-4">
-                <span className="font-display text-sm text-bark transition-transform duration-200 group-hover:translate-x-1">0{features.indexOf(f) + 1}</span>
+              <motion.article
+                key={f.title}
+                variants={revealItem}
+                whileHover={reduceMotion ? undefined : { x: 5 }}
+                className="group grid grid-cols-[3rem_1fr_auto] items-center gap-3 py-5 transition-colors hover:bg-cream-deep/60 sm:grid-cols-[4rem_1fr_auto] sm:px-4"
+              >
+                <span className="font-display text-sm text-bark transition-transform duration-200 group-hover:translate-x-1">0{index + 1}</span>
                 <div>
                   <h3 className="text-lg font-bold">{f.title}</h3>
                   <p className="mt-1 text-sm leading-6 text-bark">{f.text}</p>
                 </div>
                 <Icon className="text-wheat transition-transform duration-200 group-hover:translate-x-1" size={21} strokeWidth={1.7} aria-hidden="true" />
-              </article>
+              </motion.article>
             )
           })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -98,15 +187,20 @@ export default function Home() {
           <div className="grid items-center gap-8 md:grid-cols-2 md:gap-14">
             <div className="relative mx-auto w-full max-w-lg">
               <div aria-hidden="true" className="absolute inset-[10%] rounded-full bg-wheat/10 blur-3xl" />
-              <PackShot product={product} className="scroll-reveal-scale product-image relative aspect-square w-full drop-shadow-[0_24px_30px_rgba(0,0,0,0.18)]" />
+              <TiltCard className="relative aspect-square w-full">
+                <PackShot product={product} className="product-image relative aspect-square w-full drop-shadow-[0_24px_30px_rgba(0,0,0,0.18)]" />
+              </TiltCard>
             </div>
-            <div className="rounded-3xl bg-cream p-6 text-forest shadow-soft sm:p-8">
+            <div className="glass-card p-6 text-forest sm:p-8">
               <h2 className="text-3xl font-bold">Sanjay Atta</h2>
               <p className="mb-5 text-bark">{product.name}</p>
               <p className="mb-5 flex items-center gap-2 text-sm font-bold" aria-label={`Demo rating: ${product.rating} out of 5`}>
                 <Star size={16} className="fill-wheat text-wheat" aria-hidden="true" />
                 {product.rating} <span className="font-normal text-bark">Demo rating</span>
               </p>
+              <div className="mb-5">
+                <AnimatedStat value={product.ingredients.length} label="ingredients listed" />
+              </div>
               <ProductBuy product={product} />
               <Link to={`/product/${product.id}`} className="mt-4 inline-block text-sm font-bold underline">View Product</Link>
             </div>
@@ -237,7 +331,7 @@ export default function Home() {
             ].map(([number, title, description], index) => (
               <li key={number} className="relative border-t border-forest/20 pt-5 sm:pt-6">
                 {index < 2 && <span aria-hidden="true" className="absolute -right-4 top-[-1px] hidden w-8 border-t border-dashed border-forest/20 sm:block" />}
-                <span className="font-display text-sm text-wheat">{number}</span>
+                <span className="font-display text-sm font-bold text-forest">{number}</span>
                 <h3 className="mt-3 text-xl font-bold">{title}</h3>
                 <p className="mt-2 text-sm leading-6 text-bark">{description}</p>
               </li>
@@ -258,7 +352,7 @@ export default function Home() {
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-wheat-light">Everyday goodness, made familiar</p>
           <h2 className="text-4xl font-bold sm:text-6xl">Make every roti count.</h2>
           <p className="mx-auto mt-4 max-w-lg text-cream/75">Bring wholesome multigrain goodness to your everyday meals.</p>
-          <Button to="/shop" variant="gold" className="mt-7 w-full sm:w-auto">Shop Sanjay Atta <ArrowRight size={17} className="button-arrow" /></Button>
+          <Button to="/shop" variant="primary" className="mt-7 w-full sm:w-auto">Shop Sanjay Atta <ArrowRight size={17} className="button-arrow" /></Button>
         </div>
       </section>
     </>
