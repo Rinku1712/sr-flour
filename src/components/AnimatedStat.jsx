@@ -3,9 +3,9 @@ import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransf
 
 const easeOutExpo = (progress) => (progress === 1 ? 1 : 1 - (2 ** (-10 * progress)))
 
-export default function AnimatedStat({ value, label }) {
+export default function AnimatedStat({ value, label, className = '' }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const isInView = useInView(ref, { once: true, amount: 0.2, margin: '-80px' })
   const reduceMotion = useReducedMotion()
   const count = useMotionValue(0)
   const rounded = useTransform(count, (latest) => Math.round(latest))
@@ -21,7 +21,7 @@ export default function AnimatedStat({ value, label }) {
   }, [count, isInView, reduceMotion, value])
 
   return (
-    <div ref={ref} className="inline-flex items-baseline gap-2 rounded-2xl border border-[#E7E5E0] bg-cream-deep/70 px-4 py-3">
+    <div ref={ref} className={`inline-flex items-baseline gap-2 rounded-2xl border border-[#E7E5E0] bg-cream-deep/70 px-4 py-3 ${className}`}>
       <motion.span className="inline-block w-[2ch] text-right font-display text-2xl font-bold tabular-nums text-forest">{rounded}</motion.span>
       <span className="text-xs font-bold uppercase tracking-wider text-bark">{label}</span>
     </div>
