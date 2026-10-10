@@ -3,31 +3,39 @@
 @tailwind utilities;
 
 :root {
-  --c-cream: 250 248 245;
-  --c-cream-deep: 242 240 234;
-  --c-forest: 20 35 28;
-  --c-forest-light: 38 61 48;
-  --c-wheat: 184 134 11;
-  --c-wheat-light: 224 182 87;
-  --c-bark: 74 93 78;
-  --c-onaccent: 20 35 28;
+  --c-cream: 247 242 230;
+  --c-cream-deep: 237 229 211;
+  --c-forest: 24 58 45;
+  --c-forest-light: 40 84 62;
+  --c-terracotta: 184 107 75;
+  --c-sage: 221 231 216;
+  --c-bark: 23 35 29;
+  --c-onaccent: 247 242 230;
+  --c-muted: 104 115 107;
 }
 
 .theme-home {
-  --c-cream: 250 248 245;
-  --c-cream-deep: 242 240 234;
-  --c-forest: 20 35 28;
-  --c-forest-light: 38 61 48;
-  --c-wheat: 184 134 11;
-  --c-wheat-light: 224 182 87;
-  --c-bark: 74 93 78;
-  --c-onaccent: 20 35 28;
+  --c-cream: 247 242 230;
+  --c-cream-deep: 237 229 211;
+  --c-forest: 24 58 45;
+  --c-forest-light: 40 84 62;
+  --c-terracotta: 184 107 75;
+  --c-sage: 221 231 216;
+  --c-bark: 23 35 29;
+  --c-onaccent: 247 242 230;
+  --c-muted: 104 115 107;
 }
 
 @layer base {
-  body { @apply bg-cream font-sans text-forest antialiased; }
-  h1, h2, h3 { @apply font-display; }
-  :focus-visible { @apply outline outline-2 outline-offset-2 outline-wheat; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-cream font-sans text-forest antialiased;
+    background-image: radial-gradient(circle at top, rgba(221, 231, 216, 0.45), transparent 34%), linear-gradient(180deg, rgba(247, 242, 230, 0.96), rgba(247, 242, 230, 1));
+  }
+  h1, h2, h3 { @apply font-display tracking-[-0.04em] text-forest; }
+  p { @apply text-bark; }
+  ::selection { background: rgba(184, 107, 75, 0.18); }
+  :focus-visible { @apply outline outline-2 outline-offset-2 outline-forest; }
   summary::-webkit-details-marker { display: none; }
 }
 

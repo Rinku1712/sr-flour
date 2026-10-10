@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
 
 const styles = {
-  primary: 'bg-protein text-black hover:brightness-110',
-  gold: 'bg-wheat text-forest hover:brightness-105',
-  outline: 'border-2 border-forest/25 text-forest hover:bg-forest hover:text-cream',
+  primary: 'bg-[#183A2D] text-[#F7F2E6] shadow-[0_12px_24px_rgba(24,58,45,0.16)] hover:bg-[#28543E]',
+  gold: 'bg-[#B86B4B] text-[#F7F2E6] shadow-[0_12px_24px_rgba(184,107,75,0.18)] hover:bg-[#A75F3E]',
+  outline: 'border border-[#183A2D]/20 bg-transparent text-[#183A2D] hover:bg-[#183A2D] hover:text-[#F7F2E6]',
 }
 const MotionLink = motion.create(Link)
 
