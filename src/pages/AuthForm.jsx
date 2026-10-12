@@ -12,7 +12,7 @@ import submitJson from '../utils/submitJson'
 const authModes = {
   login: {
     title: 'Welcome back',
-    description: 'Sign in to your Sanjay Atta account.',
+    description: 'Sign in to your SR Flour account.',
     endpoint: AUTH_LOGIN_ENDPOINT,
     service: 'The sign-in service',
     button: 'Sign in',

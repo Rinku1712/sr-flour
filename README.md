@@ -1,4 +1,4 @@
-# Sanjay Atta (frontend)
+# SR Flour (frontend)
 npm install
 npm run dev
 

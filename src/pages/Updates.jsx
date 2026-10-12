@@ -44,7 +44,7 @@ export default function Updates() {
         <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-sage">Notes from our kitchen</p>
         <h1 className="mx-auto mt-3 max-w-2xl text-4xl font-bold text-cream sm:text-5xl">Good things are growing.</h1>
         <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-cream/75 sm:text-base">
-          Be the first to hear about product news, thoughtful food stories, and updates from Sanjay Atta.
+          Be the first to hear about product news, thoughtful food stories, and updates from SR Flour.
         </p>
         <form onSubmit={submit} noValidate className="mx-auto mt-8 max-w-lg text-left">
           <label htmlFor="updates-email" className="text-sm font-semibold text-cream">Email address</label>
@@ -56,7 +56,7 @@ export default function Updates() {
           </div>
           <label className="mt-4 flex cursor-pointer items-start gap-3 text-left text-xs leading-5 text-cream/75">
             <input type="checkbox" checked={consented} onChange={(event) => { setConsented(event.target.checked); setNotice(null) }} className="mt-0.5 h-4 w-4 shrink-0 accent-[#B96F50]" />
-            <span>I agree to receive email updates from Sanjay Atta. I can unsubscribe at any time.</span>
+            <span>I agree to receive email updates from SR Flour. I can unsubscribe at any time.</span>
           </label>
           {notice && <p role={notice.type === 'error' ? 'alert' : 'status'} className={`mt-4 rounded-xl px-4 py-3 text-sm leading-6 ${notice.type === 'error' ? 'bg-red-100 text-red-900' : 'bg-sage text-forest'}`}>{notice.type === 'success' && <Check size={16} className="mr-1 inline" aria-hidden="true" />}{notice.text}</p>}
         </form>

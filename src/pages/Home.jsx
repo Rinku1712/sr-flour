@@ -71,7 +71,7 @@ export default function Home() {
             </motion.h1>
             <motion.p variants={heroVariants} className="mt-5 max-w-md text-lg leading-8 text-bark">Thoughtfully blended grains for the soft everyday rotis your family already loves.</motion.p>
             <motion.div variants={heroVariants} className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button to="/shop" variant="primary">Discover Sanjay Atta <ArrowRight size={17} className="button-arrow" /></Button>
+              <Button to="/shop" variant="primary">Discover SR Flour <ArrowRight size={17} className="button-arrow" /></Button>
               <Button to="/about" variant="outline">Our Story</Button>
             </motion.div>
             <motion.p variants={heroVariants} className="mt-5 text-sm text-bark">Made for everyday Indian meals</motion.p>
@@ -192,7 +192,7 @@ export default function Home() {
               </TiltCard>
             </div>
             <div className="glass-card p-6 text-forest sm:p-8">
-              <h2 className="text-3xl font-bold">Sanjay Atta</h2>
+              <h2 className="text-3xl font-bold">SR Flour</h2>
               <p className="mb-5 text-bark">{product.name}</p>
               <p className="mb-5 flex items-center gap-2 text-sm font-bold" aria-label={`Demo rating: ${product.rating} out of 5`}>
                 <Star size={16} className="fill-wheat text-wheat" aria-hidden="true" />
@@ -352,7 +352,7 @@ export default function Home() {
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-wheat-light">Everyday goodness, made familiar</p>
           <h2 className="text-4xl font-bold sm:text-6xl">Make every roti count.</h2>
           <p className="mx-auto mt-4 max-w-lg text-cream/75">Bring wholesome multigrain goodness to your everyday meals.</p>
-          <Button to="/shop" variant="primary" className="mt-7 w-full sm:w-auto">Shop Sanjay Atta <ArrowRight size={17} className="button-arrow" /></Button>
+          <Button to="/shop" variant="primary" className="mt-7 w-full sm:w-auto">Shop SR Flour <ArrowRight size={17} className="button-arrow" /></Button>
         </div>
       </section>
     </>

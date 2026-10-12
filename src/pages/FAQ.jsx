@@ -13,7 +13,7 @@ export default function FAQ() {
         <CircleHelp aria-hidden="true" className="mx-auto text-wheat" size={30} strokeWidth={1.6} />
         <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-wheat">A little more clarity</p>
         <h1 className="mt-2 text-4xl font-bold sm:text-5xl">Frequently Asked Questions</h1>
-        <p className="mt-4 text-base leading-7 text-bark">Helpful details for your everyday Sanjay Atta experience.</p>
+        <p className="mt-4 text-base leading-7 text-bark">Helpful details for your everyday SR Flour experience.</p>
       </header>
       <section aria-label="Frequently asked questions" className="mx-auto mt-9 max-w-3xl space-y-3 sm:mt-12">
         {faqs.map((faq) => <FAQItem key={faq.q} faq={faq} />)}

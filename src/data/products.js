@@ -8,7 +8,7 @@ export const products = [
     category: 'Atta',
     shortDescription: 'Multigrain flour for soft everyday rotis.',
     description:
-      'Sanjay Atta blends wheat with other wholesome grains and seeds so the roti your family already loves can be a little more thoughtful. Final recipe details will be confirmed after product testing.',
+      'SR Flour blends wheat with other wholesome grains and seeds so the roti your family already loves can be a little more thoughtful. Final recipe details will be confirmed after product testing.',
     images: [], // add imported image files here, e.g. [packImg]. Empty = placeholder pack art.
     // Each variant is a pack size. Prices are placeholders.
     variants: [

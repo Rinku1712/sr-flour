@@ -92,7 +92,7 @@ export default function SearchOverlay({ isOpen, onClose, triggerRef }) {
       >
         <div className="border-b border-forest/10 p-5 sm:p-7">
           <div className="mb-5 flex items-center justify-between">
-            <h2 id="product-search-title" className="text-xs font-bold uppercase tracking-[0.2em] text-bark">Search Sanjay Atta</h2>
+            <h2 id="product-search-title" className="text-xs font-bold uppercase tracking-[0.2em] text-bark">Search SR Flour</h2>
             <button type="button" onClick={onClose} aria-label="Close search" className="rounded-full p-2 transition hover:bg-cream-deep focus-visible:outline">
               <X size={20} />
             </button>

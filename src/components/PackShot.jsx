@@ -21,7 +21,7 @@ export default function PackShot({ product, className = '' }) {
     )
   }
   return (
-    <div role="img" aria-label="Sanjay Atta pack (placeholder artwork)" className={`flex items-center justify-center ${className}`}>
+    <div role="img" aria-label="SR Flour pack (placeholder artwork)" className={`flex items-center justify-center ${className}`}>
       <div className="relative flex h-[88%] w-[62%] max-w-[260px] flex-col items-center justify-between overflow-hidden rounded-[1.75rem] border border-wheat/45 bg-cream px-4 py-6 text-center text-forest shadow-[0_28px_45px_-20px_rgba(0,0,0,0.55)] sm:py-8">
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-2 bg-wheat" />
         <Wheat aria-hidden="true" className="text-wheat" size={22} strokeWidth={1.4} />

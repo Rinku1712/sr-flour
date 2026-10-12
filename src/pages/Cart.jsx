@@ -17,7 +17,7 @@ export default function Cart() {
         <EmptyState
           icon={ShoppingBag}
           title="Your cart is empty"
-          text="Add Sanjay Atta to get started."
+          text="Add SR Flour to get started."
           actionLabel="Shop Now"
           actionTo="/shop"
         />

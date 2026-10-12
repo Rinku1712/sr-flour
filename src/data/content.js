@@ -113,7 +113,7 @@ export const reviews = [
   { name: 'Demo Customer C', rating: 4, text: 'Placeholder review. Real customer reviews will appear here.' },
 ]
 export const faqs = [
-  { q: 'What is Sanjay Atta?', a: 'Sanjay Atta is a multigrain atta made for everyday Indian rotis.' },
+  { q: 'What is SR Flour?', a: 'SR Flour is a multigrain atta made for everyday Indian rotis.' },
   { q: 'How should I store it?', a: 'Keep it in a cool, dry place in an airtight container.' },
   { q: 'How should I use it?', a: 'Knead it like regular atta and cook rotis as usual.' },
   { q: 'What ingredients are used?', a: 'Wheat, oats, chickpea, millets and seeds. Exact details will be confirmed on the final pack.' },

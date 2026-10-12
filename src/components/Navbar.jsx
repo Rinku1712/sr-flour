@@ -57,9 +57,9 @@ export default function Navbar() {
         >
           {open ? <X /> : <Menu />}
         </button>
-        <Link to="/" aria-label="Sanjay Atta home" className="flex items-center gap-2 font-display text-xl font-bold tracking-wide sm:text-2xl">
+        <Link to="/" aria-label="SR Flour home" className="flex items-center gap-2 font-display text-xl font-bold tracking-wide sm:text-2xl">
           <Wheat aria-hidden="true" className="text-wheat" size={21} strokeWidth={1.6} />
-          <span>SANJAY ATTA</span>
+          <span>SR FLOUR</span>
         </Link>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
           {navLinks.map((l) => <NavLink key={l.to} to={l.to} end={l.to === '/'} className={linkCls}>{l.label}</NavLink>)}

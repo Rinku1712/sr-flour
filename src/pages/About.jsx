@@ -112,7 +112,7 @@ export default function About() {
             variants={staggerReveal}
           >
             <motion.p variants={revealItem} className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-wheat">
-              The Sanjay Atta story
+              The SR Flour story
             </motion.p>
             <motion.h1 variants={revealItem} className="max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight text-forest sm:text-5xl lg:text-6xl">
               Crafted for Vitality, <span className="font-display font-medium italic text-forest-light">with Integrity</span>
@@ -224,7 +224,7 @@ export default function About() {
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-wheat">Made for the everyday</p>
             <h2 className="mt-2 text-3xl font-bold">Bring a little more thought to your table.</h2>
           </div>
-          <Button to="/shop" variant="primary" className="w-full md:w-auto">Shop Sanjay Atta <ArrowRight size={17} className="button-arrow" /></Button>
+          <Button to="/shop" variant="primary" className="w-full md:w-auto">Shop SR Flour <ArrowRight size={17} className="button-arrow" /></Button>
         </div>
       </section>
     </div>

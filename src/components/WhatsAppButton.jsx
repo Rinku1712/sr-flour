@@ -1,7 +1,7 @@
 import { MessageCircle } from 'lucide-react'
 import { WHATSAPP_NUMBER } from '../config/config'
 
-const message = encodeURIComponent('Hi Sanjay Atta, I want to know more about your product.')
+const message = encodeURIComponent('Hi SR Flour, I want to know more about your product.')
 export default function WhatsAppButton() {
   if (!WHATSAPP_NUMBER) return null
 

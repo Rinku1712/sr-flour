@@ -10,7 +10,7 @@ export default function Account() {
       <div className="mx-auto max-w-4xl">
         <header className="text-center">
           <CircleUserRound aria-hidden="true" className="mx-auto text-wheat" size={34} strokeWidth={1.5} />
-          <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-wheat">Your Sanjay Atta</p>
+          <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-wheat">Your SR Flour</p>
           <h1 className="mt-2 text-4xl font-bold sm:text-5xl">Your account, your way.</h1>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-bark">
             Sign in to manage your account. New here? Create an account to get started.
@@ -27,7 +27,7 @@ export default function Account() {
           </section>
           <section className="card p-6 sm:p-8">
             <PackageCheck aria-hidden="true" className="text-wheat" size={25} />
-            <h2 className="mt-4 text-2xl font-bold">New to Sanjay Atta?</h2>
+            <h2 className="mt-4 text-2xl font-bold">New to SR Flour?</h2>
             <p className="mt-2 text-sm leading-6 text-bark">Create an account and keep your details close for your next visit.</p>
             <Link to="/signup" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl border border-forest/20 px-5 py-3 text-sm font-bold text-forest transition hover:bg-sage/50">
               Create account <ArrowRight size={16} aria-hidden="true" />

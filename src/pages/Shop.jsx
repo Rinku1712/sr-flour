@@ -25,7 +25,7 @@ export default function Shop() {
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-bark">
             Thoughtful grains, made for home
           </p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Shop Sanjay Atta</h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Shop SR Flour</h1>
           <p className="mt-3 max-w-xl leading-7 text-bark">
             Explore our multigrain atta, made for the everyday meals you know and love.
           </p>
