@@ -32,6 +32,9 @@
     @apply bg-cream font-sans text-forest antialiased;
     background-image: radial-gradient(circle at top, rgba(221, 231, 216, 0.45), transparent 34%), linear-gradient(180deg, rgba(247, 242, 230, 0.96), rgba(247, 242, 230, 1));
   }
+  body {
+    cursor: auto;
+  }
   h1, h2, h3 { @apply font-display tracking-[-0.04em] text-forest; }
   p { @apply text-bark; }
   ::selection { background: rgba(184, 107, 75, 0.18); }
@@ -118,6 +121,62 @@
 .hero-grain-particle { filter: drop-shadow(0 0 12px rgb(229 169 59 / 20%)); }
 .search-result-enter { animation: search-result-enter 260ms ease-out both; }
 
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 180ms ease, transform 150ms ease-out;
+}
+
+.cursor-follower.is-visible {
+  opacity: 1;
+}
+
+.cursor-follower__ring,
+.cursor-follower__dot {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: 9999px;
+}
+
+.cursor-follower__ring {
+  border: 1.5px solid rgba(36, 58, 47, 0.7);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 6px rgba(184, 107, 75, 0.06);
+}
+
+.cursor-follower__dot {
+  width: 6px;
+  height: 6px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(184, 107, 75, 0.9);
+}
+
+.cursor-follower.is-hovering .cursor-follower__ring {
+  width: 36px;
+  height: 36px;
+  border-color: rgba(184, 107, 75, 0.9);
+  background: rgba(184, 107, 75, 0.08);
+  box-shadow: 0 0 0 8px rgba(184, 107, 75, 0.06);
+}
+
+.cursor-follower.is-hovering .cursor-follower__dot {
+  background: rgba(36, 58, 47, 0.9);
+}
+
+.cursor-follower.is-pressed .cursor-follower__ring {
+  transform: scale(0.82);
+}
+
 @keyframes menu-enter {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
@@ -153,6 +212,12 @@
 @keyframes search-result-enter {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cursor-ring-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.7; }
+  50% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.7; }
 }
 
 @media (prefers-reduced-motion: reduce) {

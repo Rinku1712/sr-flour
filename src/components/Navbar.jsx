@@ -10,6 +10,7 @@ export const navLinks = [
   { to: '/about', label: 'Our Story' },
   { to: '/faq', label: 'FAQ' },
   { to: '/contact', label: 'Contact' },
+  { to: '/updates', label: 'Updates' },
 ]
 const linkCls = ({ isActive }) => `editorial-link font-medium text-forest transition hover:text-bark ${isActive ? 'font-bold' : ''}`
 const iconBtn = 'relative rounded-full p-2 text-forest transition-colors hover:bg-cream-deep'

@@ -27,11 +27,12 @@ export default function Footer() {
           <nav aria-label="Support" className="flex flex-col items-start gap-3 text-sm">
             <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-wheat-light">Support</p>
             {navLinks.filter((link) => ['/faq', '/contact'].includes(link.to)).map((link) => <Link key={link.to} to={link.to} className="footer-link hover:text-wheat-light">{link.label}</Link>)}
-            <a href={`mailto:${SUPPORT_EMAIL}`} className="footer-link hover:text-wheat-light">{SUPPORT_EMAIL}</a>
+            {SUPPORT_EMAIL && <a href={`mailto:${SUPPORT_EMAIL}`} className="footer-link hover:text-wheat-light">{SUPPORT_EMAIL}</a>}
           </nav>
           <div className="flex flex-col items-start gap-3 text-sm">
-            <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-wheat-light">Follow Us</p>
-            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="footer-link hover:text-wheat-light">Instagram</a>
+            <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-wheat-light">Stay in touch</p>
+            <Link to="/updates" className="footer-link hover:text-wheat-light">Updates & newsletter</Link>
+            {INSTAGRAM_URL && <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="footer-link hover:text-wheat-light">Instagram</a>}
           </div>
         </div>
       </div>
