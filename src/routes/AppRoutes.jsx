@@ -6,18 +6,16 @@ import ProductDetails from '../pages/ProductDetails'
 import Cart from '../pages/Cart'
 import About from '../pages/About'
 import NotFound from '../pages/NotFound'
-import ComingSoon from '../pages/ComingSoon'
 import Contact from '../pages/Contact'
 import FAQ from '../pages/FAQ'
 import Updates from '../pages/Updates'
 import Account from '../pages/Account'
 import AuthForm from '../pages/AuthForm'
-
-// Pages still to build: [path, title]. Listed now so navigation never breaks.
-const upcoming = [
-  ['checkout', 'Checkout'], ['order-success', 'Order Success'],
-  ['orders', 'My Orders'], ['orders/:id', 'Order Details'], ['profile', 'Profile'],
-]
+import Checkout from '../pages/Checkout'
+import OrderSuccess from '../pages/OrderSuccess'
+import Orders from '../pages/Orders'
+import OrderDetails from '../pages/OrderDetails'
+import Profile from '../pages/Profile'
 
 export default function AppRoutes() {
   return (
@@ -27,6 +25,11 @@ export default function AppRoutes() {
         <Route path="shop" element={<Shop />} />
         <Route path="product/:id" element={<ProductDetails />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="order-success" element={<OrderSuccess />} />
+        <Route path="orders" element={<Orders />} />
+        <Route path="orders/:id" element={<OrderDetails />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="faq" element={<FAQ />} />
@@ -35,7 +38,6 @@ export default function AppRoutes() {
         <Route path="login" element={<AuthForm mode="login" />} />
         <Route path="signup" element={<AuthForm mode="signup" />} />
         <Route path="forgot-password" element={<AuthForm mode="forgot-password" />} />
-        {upcoming.map(([path, title]) => <Route key={path} path={path} element={<ComingSoon title={title} />} />)}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

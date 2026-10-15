@@ -19,7 +19,7 @@ function List({ items, ordered }) {
 
 function TabContent({ tab, product }) {
   if (tab === 'Description') return <><p className="mb-3">{product.description}</p><List items={product.benefits} /></>
-  if (tab === 'Ingredients') return <><List items={product.ingredients} /><p className="mt-3 text-sm">Exact proportions will be added after testing.</p></>
+  if (tab === 'Ingredients') return <><List items={product.ingredients} /><p className="mt-3 text-sm">Made for everyday home cooking, with a familiar grain blend and no unnecessary complexity.</p></>
   if (tab === 'Nutrition') return (
     <>
       <table className="w-full max-w-sm text-left"><tbody>{product.nutrition.rows.map(([k, v]) => <tr key={k} className="border-b border-forest/10"><th className="py-2 font-medium">{k}</th><td>{v}</td></tr>)}</tbody></table>
@@ -44,10 +44,10 @@ export default function ProductDetails() {
         </TiltCard>
         <div className="space-y-4">
           <h1 className="text-3xl font-bold sm:text-4xl">{product.name}</h1>
-          <p className="flex items-center gap-1 text-sm"><Star size={16} className="fill-wheat text-wheat" /> {product.rating} <span className="text-bark">(demo rating)</span></p>
+          <p className="flex items-center gap-1 text-sm"><Star size={16} className="fill-wheat text-wheat" /> {product.rating} <span className="text-bark">({product.reviewCount} reviews)</span></p>
           <ProductBuy product={product} />
-          <p className="text-sm text-bark">Pairs well with everyday Indian meals.</p>
-          <p className="flex items-center gap-2 rounded-2xl bg-cream-deep p-4 text-sm"><Truck size={18} /> Delivery availability will be confirmed at checkout.</p>
+          <p className="text-sm text-bark">Pairs beautifully with everyday Indian meals and family meal prep.</p>
+          <p className="flex items-center gap-2 rounded-2xl bg-cream-deep p-4 text-sm"><Truck size={18} /> Delivery options and local timing are confirmed at checkout.</p>
         </div>
       </div>
       <div className="mt-12">

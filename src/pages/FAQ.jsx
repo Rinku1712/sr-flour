@@ -19,7 +19,7 @@ export default function FAQ() {
         {faqs.map((faq) => <FAQItem key={faq.q} faq={faq} />)}
       </section>
       <p className="mx-auto mt-8 max-w-3xl rounded-2xl border border-wheat/20 bg-white/70 p-4 text-sm leading-6 text-bark">
-        Product, delivery, and payment details may change as our store is finalized. Please check the product pack and checkout for the latest verified information.
+        From delivery times to ingredient details, the order flow and product information are designed to answer the questions most families have before they buy.
       </p>
       <div className="mt-8 text-center">
         <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-bold text-forest underline underline-offset-4 hover:text-forest-light">

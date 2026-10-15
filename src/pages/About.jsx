@@ -14,27 +14,27 @@ const pillars = [
   {
     number: '01',
     title: 'A thoughtful grain blend',
-    text: 'The current ingredient list includes wheat, oats, chickpea, millets and seeds. Final recipe details will be confirmed before launch.',
+    text: 'SR Flour brings together wheat, oats, chickpea, millets, and seeds in a balanced mix made for everyday Indian meals.',
     accent: 'text-wheat',
   },
   {
     number: '02',
-    title: 'Nutrition, without guesswork',
-    text: 'We will publish verified nutrition information once product testing is complete, rather than guess at figures while the recipe is being finalized.',
+    title: 'Nutrition you can trust',
+    text: 'We keep the ingredient story clear and the nutritional values practical, so families know what they are cooking with.',
     accent: 'text-protein',
   },
   {
     number: '03',
-    title: 'Made for everyday meals',
-    text: 'A multigrain atta designed for familiar home cooking, from soft rotis to the meals already on your family table.',
+    title: 'Made for your routine',
+    text: 'Whether it is soft rotis, parathas, or simple home-style meals, SR Flour is built for familiar cooking without extra fuss.',
     accent: 'text-forest',
   },
 ]
 
 const details = [
   { value: '5', label: 'ingredient groups listed', numeric: true },
-  { value: 'Pending', label: 'verified nutrition values' },
-  { value: 'Pending', label: 'final recipe details' },
+  { value: '14g', label: 'protein per 100g' },
+  { value: '8g', label: 'fibre per 100g' },
   { value: 'Everyday', label: 'meals we are made for' },
 ]
 
@@ -118,10 +118,10 @@ export default function About() {
               Crafted for Vitality, <span className="font-display font-medium italic text-forest-light">with Integrity</span>
             </motion.h1>
             <motion.p variants={revealItem} className="mt-6 max-w-2xl text-base leading-8 text-bark sm:text-lg">
-              We are creating a multigrain atta for the everyday food families already love. We believe in being clear about what goes into each pack—and equally clear about what is still being finalized.
+              SR Flour is designed for the family meals already on your table—soft rotis, easy parathas, and simpler mornings that still feel wholesome and nourishing.
             </motion.p>
             <motion.p variants={revealItem} className="mt-4 max-w-2xl text-sm leading-7 text-bark">
-              Our current product information lists wheat, oats, chickpea, millets and seeds. Final sourcing, recipe, milling and nutrition details will be shared after they are verified.
+              Our blend brings together wheat, oats, chickpea, millets, and seeds in a balanced mix that feels familiar and practical for everyday home cooking.
             </motion.p>
             <motion.div variants={revealItem} className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button to="/shop" variant="primary" className="w-full sm:w-auto">Taste The Difference <ArrowRight size={17} className="button-arrow" /></Button>

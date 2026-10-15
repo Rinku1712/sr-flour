@@ -11,6 +11,7 @@ import {
   SUPPORT_PHONE,
 } from '../config/config'
 import submitJson from '../utils/submitJson'
+import { showSwalError, showSwalSuccess } from '../utils/sweetAlert'
 
 const inputClass = 'mt-2 w-full rounded-xl border border-forest/15 bg-[#FFFEFA] px-4 py-3 text-sm text-forest shadow-sm transition duration-200 placeholder:text-bark/45 focus:border-forest focus:bg-white focus:outline-none focus:ring-4 focus:ring-sage/60'
 
@@ -59,8 +60,11 @@ export default function Contact() {
       }, 'The contact service')
       setValues({ name: '', email: '', phone: '', subject: '', message: '' })
       setNotice({ type: 'success', text: 'Your message has been accepted. Thank you for getting in touch.' })
+      showSwalSuccess('Message sent', 'Your message has been accepted. Thank you for getting in touch.')
     } catch (error) {
-      setNotice({ type: 'error', text: error instanceof Error ? error.message : 'We could not send your message. Please try again.' })
+      const message = error instanceof Error ? error.message : 'We could not send your message. Please try again.'
+      setNotice({ type: 'error', text: message })
+      showSwalError('Message not sent', message)
     } finally {
       setSubmitting(false)
     }
