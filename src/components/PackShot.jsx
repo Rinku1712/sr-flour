@@ -5,15 +5,16 @@ import { motion, useReducedMotion } from 'framer-motion'
 export default function PackShot({ product, className = '' }) {
   const img = product?.images?.[0]
   const [imageLoaded, setImageLoaded] = useState(false)
+  const [failedImage, setFailedImage] = useState('')
   const reduceMotion = useReducedMotion()
-  if (img) {
+  if (img && img !== failedImage) {
     return (
       <img
         src={img}
         alt={`${product.name} pack`}
         loading="lazy"
         onLoad={() => setImageLoaded(true)}
-        onError={() => setImageLoaded(true)}
+        onError={() => { setImageLoaded(true); setFailedImage(img) }}
         className={`image-loaded object-contain ${className}`}
         style={{ opacity: imageLoaded ? undefined : 0 }}
       />

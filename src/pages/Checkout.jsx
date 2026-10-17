@@ -1,12 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CreditCard, MapPin, ShieldCheck, Truck } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import Button from '../components/Button'
 import EmptyState from '../components/EmptyState'
 import useTitle from '../hooks/useTitle'
+import { ORDER_ENDPOINT } from '../config/config'
 import { formatPrice } from '../utils/format'
 import { addOrder, readProfile, saveProfile } from '../utils/orderStorage'
+import submitOrder, { clearOrderRequestKey, getOrderRequestKey } from '../utils/submitOrder'
 
 const inputClass = 'mt-2 w-full rounded-xl border border-forest/15 bg-[#FFFEFA] px-4 py-3 text-sm text-forest shadow-sm transition duration-200 placeholder:text-bark/45 focus:border-forest focus:bg-white focus:outline-none focus:ring-4 focus:ring-sage/60'
 
@@ -32,6 +34,8 @@ export default function Checkout() {
   })
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const idempotencyKey = useRef(null)
 
   if (!items.length) {
     return (
@@ -42,6 +46,7 @@ export default function Checkout() {
           text="Add a few essentials before you continue to checkout."
           actionLabel="Shop now"
           actionTo="/shop"
+          headingLevel="h1"
         />
       </div>
     )
@@ -51,26 +56,25 @@ export default function Checkout() {
     const { name, value } = event.target
     setValues((current) => ({ ...current, [name]: value }))
     setErrors((current) => ({ ...current, [name]: '' }))
+    setSubmitError('')
   }
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault()
+    if (submitting || !ORDER_ENDPOINT) return
     const nextErrors = {}
     if (!values.fullName.trim()) nextErrors.fullName = 'Please add your full name.'
     if (!validEmail(values.email.trim())) nextErrors.email = 'Please enter a valid email address.'
     if (!values.address.trim()) nextErrors.address = 'Please enter your delivery address.'
     if (!values.city.trim()) nextErrors.city = 'Please enter your city.'
     if (!values.state.trim()) nextErrors.state = 'Please enter your state.'
-    if (!values.postalCode.trim()) nextErrors.postalCode = 'Please add your pin code.'
+    if (!/^[1-9]\d{5}$/.test(values.postalCode.trim())) nextErrors.postalCode = 'Please enter a valid 6-digit pin code.'
 
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length) return
 
-    setSubmitting(true)
-    const order = {
-      id: `SR-${Date.now().toString().slice(-6)}`,
-      placedAt: new Date().toISOString(),
-      status: 'Confirmed',
+    const payload = {
+      paymentMethod: 'cash_on_delivery',
       customer: {
         name: values.fullName.trim(),
         email: values.email.trim(),
@@ -83,22 +87,34 @@ export default function Checkout() {
       note: values.note.trim(),
       items: items.map(({ product, variant, qty }) => ({
         productId: product.id,
-        name: product.name,
-        weight: variant.weight,
+        variantId: variant.id,
         qty,
-        price: variant.price,
       })),
-      subtotal: cart.subtotal,
-      savings: cart.savings,
-      delivery: cart.delivery,
-      total: cart.total,
     }
-
-    saveProfile(values)
-    addOrder(order)
-    cart.clearCart()
-    navigate(`/order-success?orderId=${order.id}`)
-    setSubmitting(false)
+    setSubmitting(true)
+    setSubmitError('')
+    try {
+      idempotencyKey.current = await getOrderRequestKey(payload, idempotencyKey.current)
+      const acceptedOrder = await submitOrder(ORDER_ENDPOINT, payload, idempotencyKey.current.key)
+      idempotencyKey.current = null
+      clearOrderRequestKey()
+      const order = { ...acceptedOrder, verifiedByOrderService: true }
+      let storageWarning = false
+      try {
+        addOrder(order)
+        saveProfile(values)
+      } catch {
+        storageWarning = true
+      }
+      cart.clearCart()
+      navigate(`/order-success?orderId=${encodeURIComponent(order.id)}`, {
+        state: { order, localSaveWarning: storageWarning },
+      })
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'We could not verify the order. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const orderTotal = cart.total || 0
@@ -120,41 +136,41 @@ export default function Checkout() {
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="text-sm font-semibold text-forest">
                 Full name
-                <input name="fullName" value={values.fullName} onChange={update} className={inputClass} aria-invalid={Boolean(errors.fullName)} />
-                {errors.fullName && <span className="mt-1 block text-xs font-medium text-red-700">{errors.fullName}</span>}
+                <input name="fullName" autoComplete="name" maxLength="100" required value={values.fullName} onChange={update} className={inputClass} aria-invalid={Boolean(errors.fullName)} aria-describedby={errors.fullName ? 'checkout-name-error' : undefined} />
+                {errors.fullName && <span id="checkout-name-error" className="mt-1 block text-xs font-medium text-red-700">{errors.fullName}</span>}
               </label>
               <label className="text-sm font-semibold text-forest">
                 Email address
-                <input type="email" name="email" value={values.email} onChange={update} className={inputClass} aria-invalid={Boolean(errors.email)} />
-                {errors.email && <span className="mt-1 block text-xs font-medium text-red-700">{errors.email}</span>}
+                <input type="email" name="email" autoComplete="email" maxLength="254" required value={values.email} onChange={update} className={inputClass} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'checkout-email-error' : undefined} />
+                {errors.email && <span id="checkout-email-error" className="mt-1 block text-xs font-medium text-red-700">{errors.email}</span>}
               </label>
               <label className="text-sm font-semibold text-forest">
                 Phone number
-                <input type="tel" name="phone" value={values.phone} onChange={update} className={inputClass} placeholder="Optional" />
+                <input type="tel" name="phone" autoComplete="tel" maxLength="30" value={values.phone} onChange={update} className={inputClass} placeholder="Optional" />
               </label>
               <label className="text-sm font-semibold text-forest">
                 Postal code
-                <input name="postalCode" value={values.postalCode} onChange={update} className={inputClass} aria-invalid={Boolean(errors.postalCode)} />
-                {errors.postalCode && <span className="mt-1 block text-xs font-medium text-red-700">{errors.postalCode}</span>}
+                <input name="postalCode" autoComplete="postal-code" inputMode="numeric" maxLength="6" required value={values.postalCode} onChange={update} className={inputClass} aria-invalid={Boolean(errors.postalCode)} aria-describedby={errors.postalCode ? 'checkout-postal-error' : undefined} />
+                {errors.postalCode && <span id="checkout-postal-error" className="mt-1 block text-xs font-medium text-red-700">{errors.postalCode}</span>}
               </label>
               <label className="text-sm font-semibold text-forest sm:col-span-2">
                 Street address
-                <input name="address" value={values.address} onChange={update} className={inputClass} aria-invalid={Boolean(errors.address)} />
-                {errors.address && <span className="mt-1 block text-xs font-medium text-red-700">{errors.address}</span>}
+                <input name="address" autoComplete="street-address" maxLength="250" required value={values.address} onChange={update} className={inputClass} aria-invalid={Boolean(errors.address)} aria-describedby={errors.address ? 'checkout-address-error' : undefined} />
+                {errors.address && <span id="checkout-address-error" className="mt-1 block text-xs font-medium text-red-700">{errors.address}</span>}
               </label>
               <label className="text-sm font-semibold text-forest">
                 City
-                <input name="city" value={values.city} onChange={update} className={inputClass} aria-invalid={Boolean(errors.city)} />
-                {errors.city && <span className="mt-1 block text-xs font-medium text-red-700">{errors.city}</span>}
+                <input name="city" autoComplete="address-level2" maxLength="100" required value={values.city} onChange={update} className={inputClass} aria-invalid={Boolean(errors.city)} aria-describedby={errors.city ? 'checkout-city-error' : undefined} />
+                {errors.city && <span id="checkout-city-error" className="mt-1 block text-xs font-medium text-red-700">{errors.city}</span>}
               </label>
               <label className="text-sm font-semibold text-forest">
                 State
-                <input name="state" value={values.state} onChange={update} className={inputClass} aria-invalid={Boolean(errors.state)} />
-                {errors.state && <span className="mt-1 block text-xs font-medium text-red-700">{errors.state}</span>}
+                <input name="state" autoComplete="address-level1" maxLength="100" required value={values.state} onChange={update} className={inputClass} aria-invalid={Boolean(errors.state)} aria-describedby={errors.state ? 'checkout-state-error' : undefined} />
+                {errors.state && <span id="checkout-state-error" className="mt-1 block text-xs font-medium text-red-700">{errors.state}</span>}
               </label>
               <label className="text-sm font-semibold text-forest sm:col-span-2">
                 Delivery notes
-                <textarea name="note" rows="3" value={values.note} onChange={update} className={`${inputClass} resize-none`} placeholder="Leave near the gate / ring at the bell" />
+                <textarea name="note" rows="3" maxLength="500" value={values.note} onChange={update} className={`${inputClass} resize-none`} placeholder="Leave near the gate / ring at the bell" />
               </label>
             </div>
           </div>
@@ -166,17 +182,23 @@ export default function Checkout() {
             </div>
             <div className="rounded-2xl border border-forest/10 bg-cream-deep p-4 text-sm text-bark">
               <p className="font-semibold text-forest">Cash on delivery</p>
-              <p className="mt-1">Pay when your order reaches your doorstep.</p>
+              <p className="mt-1">Payment is due only when your order is delivered.</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 rounded-2xl border border-forest/10 bg-sage/40 p-3 text-sm text-bark">
             <ShieldCheck size={18} className="text-forest" />
-            Secure checkout for SR Flour orders. Your details are stored locally in this demo store.
+            Your order is sent to SR Flour’s order service. Prices, stock, delivery, and totals must be verified by that service.
           </div>
 
-          <Button type="submit" className="w-full" disabled={submitting}>
-            {submitting ? 'Placing order...' : `Place order • ${formatPrice(orderTotal)}`}
+          {!ORDER_ENDPOINT && (
+            <p role="alert" className="rounded-xl bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950">
+              Online ordering is not available because the order service has not been configured. Your cart is unchanged; please contact SR Flour.
+            </p>
+          )}
+          {submitError && <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm leading-6 text-red-800">{submitError}</p>}
+          <Button type="submit" className="w-full" disabled={submitting || !ORDER_ENDPOINT}>
+            {submitting ? 'Submitting order...' : `Place order • ${formatPrice(orderTotal)}`}
           </Button>
         </form>
 

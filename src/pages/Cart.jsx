@@ -10,16 +10,23 @@ export default function Cart() {
   useTitle('Your Cart');
   const cart = useCart() || {};
   const items = Array.isArray(cart.items) ? cart.items : [];
+  const persistenceWarning = cart.persistenceError && (
+    <p role="alert" className="mb-5 rounded-xl bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950">
+      This browser could not save your cart. Items may be lost if you close or refresh this page.
+    </p>
+  )
 
   if (!items.length) {
     return (
       <div className="container-page py-16">
+        {persistenceWarning}
         <EmptyState
           icon={ShoppingBag}
           title="Your cart is empty"
           text="Add SR Flour to get started."
           actionLabel="Shop Now"
           actionTo="/shop"
+          headingLevel="h1"
         />
       </div>
     );
@@ -27,6 +34,7 @@ export default function Cart() {
 
   return (
     <div className="container-page scroll-reveal py-10 sm:py-14">
+      {persistenceWarning}
       <div className="mb-8 border-b border-forest/10 pb-6">
         <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-bark">
           Review your selection

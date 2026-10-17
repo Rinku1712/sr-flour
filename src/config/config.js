@@ -11,5 +11,6 @@ export const NEWSLETTER_ENDPOINT = import.meta.env.VITE_NEWSLETTER_ENDPOINT?.tri
 export const AUTH_LOGIN_ENDPOINT = import.meta.env.VITE_AUTH_LOGIN_ENDPOINT?.trim() || ''
 export const AUTH_REGISTER_ENDPOINT = import.meta.env.VITE_AUTH_REGISTER_ENDPOINT?.trim() || ''
 export const AUTH_RESET_ENDPOINT = import.meta.env.VITE_AUTH_RESET_ENDPOINT?.trim() || ''
+export const ORDER_ENDPOINT = import.meta.env.VITE_ORDER_ENDPOINT?.trim() || ''
 export const FREE_DELIVERY_ABOVE = 499
 export const DELIVERY_CHARGE = 49 // estimate only; real rates come from shipping integration

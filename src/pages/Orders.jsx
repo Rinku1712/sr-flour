@@ -18,6 +18,7 @@ export default function Orders() {
           text="Start with a fresh order and your recent purchases will appear here."
           actionLabel="Shop now"
           actionTo="/shop"
+          headingLevel="h1"
         />
       </div>
     )
