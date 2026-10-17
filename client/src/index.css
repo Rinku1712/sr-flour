@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-cream: 247 242 230;
+  --c-cream-deep: 237 229 211;
+  --c-forest: 24 58 45;
+  --c-forest-light: 40 84 62;
+  --c-terracotta: 184 107 75;
+  --c-sage: 221 231 216;
+  --c-bark: 23 35 29;
+  --c-onaccent: 247 242 230;
+  --c-muted: 104 115 107;
+}
+
+.theme-home {
+  --c-cream: 247 242 230;
+  --c-cream-deep: 237 229 211;
+  --c-forest: 24 58 45;
+  --c-forest-light: 40 84 62;
+  --c-terracotta: 184 107 75;
+  --c-sage: 221 231 216;
+  --c-bark: 23 35 29;
+  --c-onaccent: 247 242 230;
+  --c-muted: 104 115 107;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-cream font-sans text-forest antialiased;
+    background-image: radial-gradient(circle at top, rgba(221, 231, 216, 0.45), transparent 34%), linear-gradient(180deg, rgba(247, 242, 230, 0.96), rgba(247, 242, 230, 1));
+  }
+  body {
+    cursor: auto;
+  }
+  h1, h2, h3 { @apply font-display tracking-[-0.04em] text-forest; }
+  p { @apply text-bark; }
+  ::selection { background: rgba(184, 107, 75, 0.18); }
+  :focus-visible { @apply outline outline-2 outline-offset-2 outline-forest; }
+  summary::-webkit-details-marker { display: none; }
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .button-motion::after { display: none; }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .section { @apply py-14 sm:py-20; }
+  .card { @apply rounded-3xl border border-[#E7E5E0] bg-white text-forest shadow-md; }
+  .mobile-navigation { @apply flex max-h-0 flex-col overflow-hidden opacity-0 transition-all duration-200; }
+  .mobile-navigation-open { @apply max-h-[28rem] opacity-100; }
+  .scroll-reveal { opacity: 1; transform: none; }
+  .scroll-reveal.is-visible { opacity: 1; transform: none; }
+  .scroll-reveal-stagger > * { transition-delay: 0ms; }
+  .scroll-reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 80ms; }
+  .scroll-reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 160ms; }
+  .scroll-reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 240ms; }
+  .scroll-reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 320ms; }
+  .editorial-link { @apply relative transition-transform duration-200 after:absolute after:-bottom-1 after:left-1/2 after:h-px after:w-full after:-translate-x-1/2 after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:-translate-y-px hover:after:scale-x-100; }
+  .footer-link { @apply relative w-fit transition-colors duration-200 after:absolute after:-bottom-0.5 after:left-1/2 after:h-px after:w-full after:-translate-x-1/2 after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100; }
+  .product-card-action { @apply translate-y-2 opacity-100 transition duration-200 sm:translate-y-3 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:focus-within:translate-y-0 sm:focus-within:opacity-100; }
+}
+
+.motion-ready .scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 560ms ease-out, transform 560ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.motion-ready .scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.motion-ready .scroll-reveal-scale:not(.is-visible) { opacity: 0; transform: scale(0.96); }
+.motion-ready .scroll-reveal-scale.is-visible { opacity: 1; transform: scale(1); transition: opacity 700ms ease-out, transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1); }
+
+.motion-ready .scroll-reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 420ms ease-out, transform 420ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.motion-ready .scroll-reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navbar-enter { animation: navbar-fade 360ms ease-out both; }
+.mobile-navigation-open a { animation: menu-enter 240ms ease-out both; }
+.mobile-navigation-open a:nth-child(2) { animation-delay: 25ms; }
+.mobile-navigation-open a:nth-child(3) { animation-delay: 50ms; }
+.mobile-navigation-open a:nth-child(4) { animation-delay: 75ms; }
+.mobile-navigation-open a:nth-child(5) { animation-delay: 100ms; }
+.mobile-navigation-open a:nth-child(6) { animation-delay: 125ms; }
+
+.page-transition { animation: page-fade 240ms ease-out both; }
+.cart-count { animation: badge-pop 220ms cubic-bezier(0.2, 0.75, 0.25, 1) both; }
+.cart-icon { animation: badge-pop 260ms cubic-bezier(0.2, 0.75, 0.25, 1) both; }
+.quantity-value { animation: quantity-pop 180ms ease-out both; }
+.product-image { transition: transform 450ms cubic-bezier(0.2, 0.75, 0.25, 1); }
+.product-image:hover { transform: scale(1.02); }
+.image-loaded { animation: image-fade 480ms ease-out both; }
+.button-arrow { transition: transform 220ms ease-out; }
+.button-motion:hover .button-arrow { transform: translateX(4px); }
+.button-motion { position: relative; isolation: isolate; overflow: hidden; }
+.button-motion::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: radial-gradient(circle at 82% 35%, rgb(255 239 181 / 55%) 0 1px, transparent 2px), radial-gradient(circle at 72% 70%, rgb(255 239 181 / 42%) 0 1px, transparent 2px), radial-gradient(circle at 92% 65%, rgb(255 239 181 / 35%) 0 1px, transparent 2px);
+  content: "";
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+}
+.button-motion:hover::after, .button-motion:focus-visible::after { opacity: 1; }
+.glass-card { @apply rounded-3xl border border-[#E7E5E0] bg-white shadow-md; }
+.hero-grain-particle { filter: drop-shadow(0 0 12px rgb(229 169 59 / 20%)); }
+.search-result-enter { animation: search-result-enter 260ms ease-out both; }
+
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 180ms ease, transform 150ms ease-out;
+}
+
+.cursor-follower.is-visible {
+  opacity: 1;
+}
+
+.cursor-follower__ring,
+.cursor-follower__dot {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: 9999px;
+}
+
+.cursor-follower__ring {
+  border: 1.5px solid rgba(36, 58, 47, 0.7);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 6px rgba(184, 107, 75, 0.06);
+}
+
+.cursor-follower__dot {
+  width: 6px;
+  height: 6px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(184, 107, 75, 0.9);
+}
+
+.cursor-follower.is-hovering .cursor-follower__ring {
+  width: 36px;
+  height: 36px;
+  border-color: rgba(184, 107, 75, 0.9);
+  background: rgba(184, 107, 75, 0.08);
+  box-shadow: 0 0 0 8px rgba(184, 107, 75, 0.06);
+}
+
+.cursor-follower.is-hovering .cursor-follower__dot {
+  background: rgba(36, 58, 47, 0.9);
+}
+
+.cursor-follower.is-pressed .cursor-follower__ring {
+  transform: scale(0.82);
+}
+
+@keyframes menu-enter {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes navbar-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes image-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes page-fade {
+  from { opacity: 0.72; }
+  to { opacity: 1; }
+}
+
+@keyframes badge-pop {
+  0% { transform: scale(0.8); }
+  65% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes quantity-pop {
+  0% { transform: scale(0.92); }
+  65% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes search-result-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cursor-ring-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.7; }
+  50% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  .motion-ready .scroll-reveal,
+  .motion-ready .scroll-reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .motion-ready .scroll-reveal { transform: translateY(16px); transition-duration: 420ms; }
+  .motion-ready .scroll-reveal-stagger > * { transform: translateY(8px); transition-duration: 320ms; }
+}
